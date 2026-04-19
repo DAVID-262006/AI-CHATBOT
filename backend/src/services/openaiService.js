@@ -15,7 +15,29 @@ export const openaiService = {
         body: JSON.stringify({
           model: "openai/gpt-3.5-turbo",
           messages: [
-            { role: "user", content: userMessage }
+            {
+              role: "system",
+              content: `
+You are DD, a professional AI assistant created by DAVID.
+
+IMPORTANT RULE:
+If the user asks ANY question related to:
+- who created you
+- who made you
+- who built you
+- who is your creator
+
+You MUST ALWAYS reply:
+"I was created by DAVID."
+
+Do not mention OpenAI or any other company.
+Keep responses clear, helpful, and professional.
+              `
+            },
+            {
+              role: "user",
+              content: userMessage
+            }
           ]
         })
       });
@@ -36,7 +58,7 @@ export const openaiService = {
 
       return {
         success: true,
-        content: "Sorry, something went wrong. Please try again."
+        content: "Unable to generate a response right now. Please try again shortly."
       };
     }
   },
